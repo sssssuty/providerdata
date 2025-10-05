@@ -233,7 +233,7 @@ async function fetchWithProxy(url, options = {}) {
         }
     }
     
-    throw new Error('All CORS proxies failed. Please try one of these solutions:\n1. Run the app from a web server (not file://)\n2. Use a browser extension like "CORS Unblock"\n3. Try a different browser or incognito mode\n4. The NPI Registry API may be temporarily unavailable.');
+    throw new Error('All CORS proxies failed. Please try one of these solutions:\n1. Run the app from a web server (not file://)\n2. Use a browser extension like "CORS Unblock"\n3. Try a different browser or incognito mode\n4. Database may be temporarily unavailable.');
 }
 
 // API Functions
@@ -272,7 +272,7 @@ async function getNpi(firstName, lastName, state = null) {
         }
         
         if (!response.ok) {
-            throw new Error(`NPI Registry API error: ${response.status}`);
+            throw new Error(`API error: ${response.status}`);
         }
         
         const data = await response.json();
@@ -295,10 +295,10 @@ async function getNpi(firstName, lastName, state = null) {
                 2. <strong>Browser extension:</strong> Install "CORS Unblock" extension<br>
                 3. <strong>Different browser:</strong> Try Chrome, Firefox, or Edge<br>
                 4. <strong>Incognito mode:</strong> May bypass some restrictions<br>
-                5. <strong>API status:</strong> NPI Registry may be temporarily unavailable
+                5. <strong>API status:</strong> Database may be temporarily unavailable
             `, 'warning');
         } else {
-            showMessage(`NPI Registry API error: ${error.message}`, 'error');
+            showMessage(`API error: ${error.message}`, 'error');
         }
         
         return [];
@@ -310,7 +310,7 @@ async function fetchCmsData(npi, limit = 1000, offset = 0) {
     const cacheKey = `cms_${npi}_${limit}_${offset}`;
     const cached = getCachedResult(cacheKey);
     if (cached) {
-        console.log(`Using cached CMS data for NPI ${npi}`);
+        console.log(`Using cached data for NPI ${npi}`);
         return cached;
     }
 
@@ -338,7 +338,7 @@ async function fetchCmsData(npi, limit = 1000, offset = 0) {
         }
         
         if (!response.ok) {
-            throw new Error(`Failed to fetch CMS data for NPI ${npi}: ${response.status}`);
+            throw new Error(`Failed to fetch data for NPI ${npi}: ${response.status}`);
         }
         
         const data = await response.json();
@@ -351,12 +351,12 @@ async function fetchCmsData(npi, limit = 1000, offset = 0) {
         
         return result;
     } catch (error) {
-        console.error('Error fetching CMS data:', error);
+        console.error('Error fetching data:', error);
         
         if (error.message.includes('CORS proxies failed')) {
-            showMessage(`⚠️ CMS data fetch failed for NPI ${npi}. Try running from a web server.`, 'warning');
+            showMessage(`⚠️ Data fetch failed for NPI ${npi}. Try running from a web server.`, 'warning');
         } else {
-            showMessage(`Failed to fetch CMS data for NPI ${npi}: ${error.message}`, 'error');
+            showMessage(`Failed to fetch data for NPI ${npi}: ${error.message}`, 'error');
         }
         
         return [];
@@ -1302,7 +1302,7 @@ async function handleFormSubmit(e) {
             showMessage(`✅ Using NPI ${npi}`, 'success');
         } else {
             // Search by name and state
-            showMessage("📡 Attempting to connect to NPI Registry API...", 'info');
+            showMessage("📡 Connecting to database...", 'info');
             npiList = await getNpi(firstName, lastName, state);
             
             if (npiList.length === 0) {
@@ -1321,7 +1321,7 @@ async function handleFormSubmit(e) {
             showMessage(`✅ Found ${npiList.length} NPI(s) for ${firstName} ${lastName}`, 'success');
         }
 
-        showMessage(`📊 Fetching CMS data for each NPI... This may take a few moments.`, 'info');
+        showMessage(`📊 Fetching data for each NPI... This may take a few moments.`, 'info');
         totalNpis = npiList.length;
         updateProgress(0, totalNpis);
 
