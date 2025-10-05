@@ -1328,12 +1328,12 @@ async function handleFormSubmit(e) {
         // Process each NPI
         for (let i = 0; i < npiList.length; i++) {
             const currentNpi = npiList[i];
-            showMessage(`📊 Fetching CMS data for NPI ${currentNpi}...`, 'info');
+            showMessage(`📊 Fetching data for NPI ${currentNpi}...`, 'info');
             
             const cmsData = await fetchCmsData(currentNpi);
             
             if (cmsData.length === 0) {
-                showMessage(`⚠️ No CMS data found for NPI ${currentNpi}.`, 'warning');
+                showMessage(`⚠️ No data found for NPI ${currentNpi}.`, 'warning');
             } else {
                 showMessage(`✅ Data found for NPI ${currentNpi} (${cmsData.length} records)`, 'success');
                 // Open new tab with results
