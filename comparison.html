@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Comparison</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <style>
+    body { 
+      background: #111111; 
+      margin: 0; 
+      padding: 0; 
+      color: #ffffff; 
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    
+    .page-title { 
+      text-align: center; 
+      padding: 30px 20px 10px; 
+      font-size: 2.5em; 
+      font-weight: bold; 
+    }
+    
+    .comparison-container { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 30px; 
+      padding: 20px 40px 40px; 
+      min-height: 100vh; 
+    }
+    
+    .provider-column { 
+      background: rgba(255, 255, 255, 0.05); 
+      border-radius: 12px; 
+      padding: 30px; 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    
+    .provider-header { 
+      text-align: center; 
+      margin-bottom: 30px; 
+      padding-bottom: 20px; 
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2); 
+    }
+    
+    .provider-title { 
+      font-size: 2em; 
+      font-weight: bold; 
+      margin-bottom: 10px; 
+    }
+    
+    .chart-section { 
+      margin-bottom: 40px; 
+    }
+    
+    .chart-title { 
+      font-size: 1.5em; 
+      font-weight: 600; 
+      margin-bottom: 20px; 
+      text-align: center; 
+      color: #ffffff; 
+    }
+    
+    .google-chart { 
+      width: 100% !important; 
+      height: 400px !important; 
+      min-height: 400px; 
+    }
+    
+    .data-table { 
+      background: rgba(255, 255, 255, 0.1); 
+      border-radius: 8px; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+    }
+    
+    .data-table h3 { 
+      font-size: 1.3em; 
+      font-weight: 600; 
+      margin-bottom: 15px; 
+      color: #ffffff; 
+    }
+    
+    .table-wrapper { 
+      max-height: 400px; 
+      overflow: auto; 
+    }
+    
+    .data-table table { 
+      width: 100%; 
+      border-collapse: collapse; 
+    }
+    
+    .data-table th, .data-table td { 
+      padding: 10px; 
+      text-align: left; 
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+      color: #ffffff; 
+      font-size: 14px; 
+    }
+    
+    .data-table th { 
+      background: rgba(255, 255, 255, 0.1); 
+      font-weight: 600; 
+      position: sticky; 
+      top: 0; 
+      z-index: 10; 
+    }
+    
+    @media (max-width: 1200px) { 
+      .comparison-container { 
+        grid-template-columns: 1fr; 
+      } 
+    }
+  </style>
+</head>
+<body>
+  <div class="comparison-container">
+    <!-- Provider 1 Column -->
+    <div class="provider-column">
+      <div class="provider-header">
+        <div class="provider-title" id="provider1Title">Provider 1</div>
+      </div>
+      
+      <div class="chart-section">
+        <div class="chart-title">Procedure Code and Volume</div>
+        <div id="chart1-volume" class="google-chart"></div>
+      </div>
+      
+      <div class="chart-section">
+        <div class="chart-title">Procedure Code and Payment</div>
+        <div id="chart1-payment" class="google-chart"></div>
+      </div>
+      
+      <div class="data-table">
+        <h3>Summary by HCPCS</h3>
+        <div class="table-wrapper">
+          <table id="table1-summary"></table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Provider 2 Column -->
+    <div class="provider-column">
+      <div class="provider-header">
+        <div class="provider-title" id="provider2Title">Provider 2</div>
+      </div>
+      
+      <div class="chart-section">
+        <div class="chart-title">Procedure Code and Volume</div>
+        <div id="chart2-volume" class="google-chart"></div>
+      </div>
+      
+      <div class="chart-section">
+        <div class="chart-title">Procedure Code and Payment</div>
+        <div id="chart2-payment" class="google-chart"></div>
+      </div>
+      
+      <div class="data-table">
+        <h3>Summary by HCPCS</h3>
+        <div class="table-wrapper">
+          <table id="table2-summary"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="cpt_data.js"></script>
+  <script src="comparison.js"></script>
+</body>
+</html>
+
